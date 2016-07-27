@@ -125,10 +125,45 @@ dots.activateEventListeners = function() {
 	document.addEventListener('keydown', dots.handleKeyDown, false);
 	//canvas.onmousedown = dots.fieldDragging.startMoving;
 	//canvas.onmousemove = dots.fieldDragging.move;
-   // canvas.onmouseup = dots.fieldDragging.stopMoving;
-   // canvas.onmouseout = dots.fieldDragging.mouseout;
+	// canvas.onmouseup = dots.fieldDragging.stopMoving;
+	// canvas.onmouseout = dots.fieldDragging.mouseout;
     
 };
+
+
+dots.handleKeyDown = function(event) {
+	
+	var keyCode = event.keyCode;
+	
+	switch(keyCode) {
+		case 38:
+			dots.camera.up();
+			break;
+		case 40:
+			dots.camera.down();
+			break;
+		case 37:
+			dots.camera.left();
+			break;
+		case 39:
+			dots.camera.right();
+			break;
+		case 67:
+			dots.variables.connectionModeEnabled = !dots.variables.connectionModeEnabled;
+			break;
+		default:
+			return;
+	}
+	
+	//←    37
+	//↑    38
+	//→    39
+	//↓    40
+	//c C  67
+	
+	dots.draw();
+	
+}
 
 
 dots.checkIfPointerOnButton = function (x, y) {
