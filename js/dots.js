@@ -284,12 +284,14 @@ dots.drawLine = function (orientation, where, from, to, text) {
 dots.drawGrid = function() {
 	
 	var vars = dots.variables;
+	var tempVars = dots.renderingTemporaryVariables;
+	var camera = dots.camera;
 	
 	for (var i = 0; i < vars.tilesOnY; i++) {
-		dots.drawLine("horizontal", i * vars.tileHeight, 0, vars.width, i);
+		dots.drawLine("horizontal", i * tempVars.tileHeight + camera.displacementY, 0, vars.width, i + camera.fromY);
 	}
 	for (var i = 0; i < vars.tilesOnX; i++) {
-		dots.drawLine("vertical", i * vars.tileWidth, 0, vars.height, i);
+		dots.drawLine("vertical", i * tempVars.tileWidth + camera.displacementX, 0, vars.height, i + camera.fromX);
 	}
 	
 }
