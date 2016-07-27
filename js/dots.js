@@ -184,12 +184,36 @@ dots.checkIfPointerOnButton = function (x, y) {
 
 dots.updateRenderingTemporaryVariables = function() {
 	
-	var mainVars = dots.variables;
+	var vars = dots.variables;
 	var tempVars = dots.renderingTemporaryVariables;
 	var camera = dots.camera;
 	
-	tempVars.tileWidth = mainVars.tileWidth * camera.scale;
-	tempVars.tileHeight = mainVars.tileHeight * camera.scale;
+	if (camera.displacementX > tempVars.tileWidth) {
+		camera.displacementX -= tempVars.tileWidth;
+		camera.fromX ++;
+	}
+	if (camera.displacementY > tempVars.tileHeight) {
+		camera.displacementY -= tempVars.tileHeight;
+		camera.fromY ++;
+	}
+	if (camera.displacementX < -tempVars.tileWidth) {
+		camera.displacementX += tempVars.tileWidth;
+		camera.fromX --;
+	}
+	if (camera.displacementY < -tempVars.tileHeight) {
+		camera.displacementY += tempVars.tileHeight;
+		camera.fromY --;
+	}
+	
+	tempVars.tileWidth = vars.tileWidth * camera.scale;
+	tempVars.tileHeight = vars.tileHeight * camera.scale;
+	
+	tempVars.firstVisibleTileX = camera.fromX;
+	tempVars.firstVisibleTileY = camera.fromY;
+	tempVars.lastVisibleTileX = tempVars.firstVisibleTileX + vars.tilesOnX;
+	tempVars.lastVisibleTileY = tempVars.firstVisibleTileY + vars.tilesOnY;
+	
+	
 	
 };
 
