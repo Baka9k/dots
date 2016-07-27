@@ -49,7 +49,19 @@ dots.camera = {
 	fromX: 0,
 	fromY: 0,
 	displacementX: 0,
-	displacementY: 0
+	displacementY: 0,
+	up: function() {
+		this.fromY --;
+	},
+	down: function() {
+		this.fromY ++;
+	},
+	left: function() {
+		this.fromX --;
+	},
+	right: function() {
+		this.fromX ++;
+	},
 };
 
 dots.renderingTemporaryVariables = {
