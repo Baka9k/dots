@@ -21,7 +21,7 @@ dots.variables = {
 	
 	dotSize: 10,
 	lineWidth: 0.1,
-	font: '10px lucida console',
+	font: '10px Arial',
 	buttonFont: '30px Arial Black',
 	canvas: "",
 	context: "",
@@ -48,13 +48,17 @@ dots.camera = {
 	scale: 1,
 	fromX: 0,
 	fromY: 0,
-	toX: 0,
-	toY: 0,
+	displacementX: 0,
+	displacementY: 0
 };
 
 dots.renderingTemporaryVariables = {
 	tileWidth: 0,
 	tileHeight: 0,
+	firstVisibleTileX: 0,
+	lastVisibleTileX: 0,
+	firstVisibleTileY: 0,
+	lastVisibleTileY: 0,
 };
 
 dots.buttons = {
@@ -73,10 +77,13 @@ dots.buttons = {
 
 
 dots.init = function() {
-	//alert('￭ Нажмите на поле, чтобы поставить точку.\n￭ Перетаскивайте точки и двигайте поле с помощью мыши.\n￭ Соединяйте точки линиями, включив режим соединения и нажимая левую кнопку мыши над одной точкой, и отпуская над другой.\n￭ Включить режим соединения - С на клавиатуре или кнопка С в правом нижнем углу.\n￭ Отменяйте последнее перемещение точки, нажимая U на клавиатуре или кнопку U в правом нижнем углу.');
+	
 	dots.prepareCanvas();
 	dots.activateEventListeners();
 	dots.calculateVariables();
+	
+	dots.draw();
+	
 };
 
 
@@ -290,7 +297,6 @@ dots.drawTools = function() {
 
 window.onload = function() {
 	dots.init();
-	dots.draw();
 };
 
 
