@@ -92,6 +92,27 @@ dots.buttons = {
 
 
 
+//Classes
+
+var Dot = function(x, y, id, color) {
+	this.x = x;
+	this.y = y;
+	this.id = id;
+	this.color = color || dots.variables.colors.dot;
+	return this;
+};
+
+var Line = function(startDot, endDot, color) {
+	this.startDot = startDot;
+	this.endDot = endDot;
+	this.color = color || dots.variables.colors.connectionLine;
+	return this;
+};
+
+
+
+//Methods
+
 dots.init = function() {
 	
 	dots.prepareCanvas();
