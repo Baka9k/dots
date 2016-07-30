@@ -428,19 +428,19 @@ dots.updateRenderingTemporaryVariables = function() {
 	
 	if (camera.displacementX > tempVars.tileWidth) {
 		camera.displacementX -= tempVars.tileWidth;
-		camera.fromX ++;
+		camera.fromX --;
 	}
 	if (camera.displacementY > tempVars.tileHeight) {
 		camera.displacementY -= tempVars.tileHeight;
-		camera.fromY ++;
+		camera.fromY --;
 	}
 	if (camera.displacementX < -tempVars.tileWidth) {
 		camera.displacementX += tempVars.tileWidth;
-		camera.fromX --;
+		camera.fromX ++;
 	}
 	if (camera.displacementY < -tempVars.tileHeight) {
 		camera.displacementY += tempVars.tileHeight;
-		camera.fromY --;
+		camera.fromY ++;
 	}
 	
 	tempVars.tileWidth = vars.tileWidth * camera.scale;
