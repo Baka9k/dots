@@ -2,6 +2,8 @@ var dots = {};
 
 
 
+//Data
+
 dots.data = {
 	dotsarray: [],
 	linesarray: [],
@@ -13,14 +15,16 @@ dots.variables = {
 		field: "#000000",
 		line: "#00CED1",
 		lineNumber: "#00CED1",
-		dot: "#FF0000",
+		dot: "#00FFFF",
+		connectionLine: "#00FFFF",
 		buttonStroke: "#00CED1",
 		buttonText: "#00CED1",
 		buttonBackground: "#000000",
 	},
 	
-	dotSize: 10,
+	dotRadius: 10,
 	lineWidth: 0.1,
+	connectionLineWidth: 3,
 	font: '10px Arial',
 	buttonFont: '30px Arial Black',
 	canvas: "",
