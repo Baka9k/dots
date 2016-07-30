@@ -140,17 +140,17 @@ dots.prepareCanvas = function() {
 	var context = canvas.getContext("2d");
 	var width = window.innerWidth;
 	var height = window.innerHeight;
-	
+
 	canvas.width = width;
-    canvas.height = height;
-    canvas.style.position = "absolute";
-    canvas.style.left = "0px";
-    canvas.style.top = "0px";
-    
-    dots.variables.canvas = canvas;
-    dots.variables.context = context;
-    dots.variables.width = width;
-    dots.variables.height = height;
+	canvas.height = height;
+	canvas.style.position = "absolute";
+	canvas.style.left = "0px";
+	canvas.style.top = "0px";
+
+	dots.variables.canvas = canvas;
+	dots.variables.context = context;
+	dots.variables.width = width;
+	dots.variables.height = height;
     
 };
 
@@ -158,12 +158,13 @@ dots.prepareCanvas = function() {
 dots.activateEventListeners = function() {
 	
 	var canvas = dots.variables.canvas;
+	var handleMouse = dots.handleMouseEvent;
 	
 	document.addEventListener('keydown', dots.handleKeyDown, false);
-	//canvas.onmousedown = dots.fieldDragging.startMoving;
-	//canvas.onmousemove = dots.fieldDragging.move;
-	// canvas.onmouseup = dots.fieldDragging.stopMoving;
-	// canvas.onmouseout = dots.fieldDragging.mouseout;
+	canvas.onmousedown = handleMouse.startMoving;
+	canvas.onmousemove = handleMouse.move;
+	canvas.onmouseup = handleMouse.stopMoving;
+	canvas.onmouseout = handleMouse.mouseout;
     
 };
 
@@ -200,7 +201,186 @@ dots.handleKeyDown = function(event) {
 	
 	dots.draw();
 	
-}
+};
+
+
+dots.handleMouseEvent = {
+	
+	variables: {
+		movingStartX: 0,
+		movingStartY: 0,
+		lineStartX: 0,
+		lineStartY: 0,
+		lineEndX: 0,
+		lineEndY: 0,
+		startDot: "",
+		endDot: "",
+		movingDot: "",
+	},
+	
+	
+	startMoving: function(e) {
+		
+		var pointerX = e.pageX;
+		var pointerY = e.pageY;
+		
+		var vars = dots.variables;
+		var lvars = dots.handleMouseEvent.variables;
+		var dotsarray = dots.data.dotsarray;
+		
+		if (vars.connectionModeEnabled) {
+			//start line
+			
+			if (dotsarray[1] == undefined) return;
+			
+			var dot = dots.checkIfPointerOnDot(pointerX, pointerY);
+			if (dot) {
+				lvars.lineStartX = dot.x;
+				lvars.lineStartX = dot.y;
+				vars.connectingStarted = true;
+				lvars.startDot = dot.id;
+			}
+			 
+		} else {
+			
+			//if pointer on dot
+			var dot = dots.checkIfPointerOnDot(pointerX, pointerY);
+			if (dot) {
+				vars.dotIsMoving = true;
+				lvars.movingDot = dot.id;
+			}
+			
+			//if pointer not on dot
+			if (!vars.dotIsMoving) {
+				vars.isMoving = true;
+			}
+			
+		}
+	
+	},
+	
+	
+	move: function(e) {
+		
+		var vars = dots.variables;
+		var lvars = dots.handleMouseEvent.variables;
+		var dotsarray = dots.data.dotsarray;
+		
+		var pointerX = e.pageX;
+		var pointerY = e.pageY;
+		var displacementX = pointerX - lvars.movingStartX;
+		var displacementY = pointerY - lvars.movingStartY;
+			
+		if (vars.isMoving) {
+			
+			dots.camera.displacementX += displacementX;
+			dots.camera.displacementY += displacementY;
+			
+			dots.draw();
+			
+		}
+		
+		else if (vars.dotIsMoving) {
+			
+			dotsarray[lvars.movingDot].x += displacementX;
+			dotsarray[lvars.movingDot].y += displacementY;
+			
+			dots.draw();
+			
+	    }
+	    
+		else if (vars.connectingStarted) {
+			
+			dots.draw();
+		   	
+		   	var context = vars.context;
+		   	var lineWidth = vars.connectionLineWidth;
+		   	var lineColor = vars.colors.connectionLine;
+		   	var lineStartX = lvars.lineStartX;
+		   	var lineStartY = lvars.lineStartY;
+		   	var lineEndX = pointerX;
+		   	var lineEndY = pointerY;
+		   	
+			vars.context.lineWidth = lineWidth;
+			vars.context.strokeStyle = lineColor;
+			vars.context.beginPath();
+			context.moveTo(lineStartX, lineStartY);
+			context.lineTo(lineEndX, lineEndY);
+			context.stroke();
+			context.closePath();
+			
+	    }
+	    
+	    lvars.movingStartX = pointerX;
+	    lvars.movingStartY = pointerY;
+	    
+    },
+    
+    
+	stopMoving: function(e) {
+		
+		var vars = dots.variables;
+		var lvars = dots.handleMouseEvent.variables;
+		
+		var pointerX = e.pageX;
+		var pointerY = e.pageY;
+		var displacementX = pointerX - lvars.movingStartX;
+		var displacementY = pointerY - lvars.movingStartY;
+		
+		if (vars.isMoving) {
+		
+            vars.isMoving = false;
+            
+            //If it was click - add new dot
+		    if ((displacementX == 0) && (displacementY == 0)) {
+		        dots.addDot(pointerX, pointerY);	
+		    }
+		    
+		}
+		
+		else if (vars.dotIsMoving) {
+			vars.dotMoving = false;
+		}
+		
+		else if (vars.connectionStarted) {
+			
+			vars.connectionStarted = false;
+			
+			//if pointer on dot
+			var dot = dots.checkIfPointerOnDot(pointerX, pointerY);
+			if (dot) {
+				lvars.endDot = dot.id;
+				dots.addLine(lvars.startDot, lvars.endDot);
+			}
+			
+	    }
+	    
+	    dots.draw();
+	    
+    },
+    
+    
+	mouseout: function(e) {
+		
+		var vars = dots.variables;
+		var lvars = dots.handleMouseEvent.variables;
+		
+		if (vars.isMoving) {
+            vars.isMoving = false;    
+		}
+		else if (vars.dotIsMoving) {
+			vars.dotIsMoving = false;
+		}
+		else if (vars.connectionStarted) {
+			vars.connectionStarted = false;
+	    }
+	    
+	    dots.draw();
+		
+    },
+    
+    
+};
 
 
 dots.checkIfPointerOnButton = function (x, y) {
