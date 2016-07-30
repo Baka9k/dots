@@ -399,6 +399,27 @@ dots.checkIfPointerOnButton = function (x, y) {
 };
 
 
+
+dots.addDot = function (x, y) {
+	
+	var dotsarray = dots.data.dotsarray;
+	
+	var dot = new Dot(x, y, dotsarray.length);
+	dotsarray.push(dot);
+	
+};
+
+
+dots.addLine = function (startDot, endDot) {
+
+	var linesarray = dots.data.linesarray;
+	
+	var line = new Line(startDot, endDot);
+	linesarray.push(line);
+	
+};
+
+
 dots.updateRenderingTemporaryVariables = function() {
 	
 	var vars = dots.variables;
