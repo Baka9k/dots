@@ -399,6 +399,23 @@ dots.checkIfPointerOnButton = function (x, y) {
 };
 
 
+dots.checkIfPointerOnDot = function (x, y) {
+	var dotsarray = dots.data.dotsarray;
+	for (var i = 0; i < dotsarray.length; i++) {
+		var dot = dotsarray.i;
+		/*
+		var buttonStartX = dots.variables.width - button.offsetRight;
+		var buttonEndX = buttonStartX + button.width;
+		var buttonStartY = dots.variables.height - button.offsetBottom;
+		var buttonEndY = buttonStartY + button.height;
+		if ( (x > buttonStartX) && (y > buttonStartY) && (x < buttonEndX) && (y < buttonEndY) ) {
+			return button.name;
+		}
+		*/
+	}
+	return false;
+};
+
 
 dots.addDot = function (x, y) {
 	
@@ -456,6 +473,22 @@ dots.updateRenderingTemporaryVariables = function() {
 };
 
 
+dots.lineIsVisible = function(line) {
+
+};
+
+
+dots.dotIsVisible = function(dot) {
+
+};
+
+
+dots.getDotById = function(id) {
+
+};
+
+
+
 dots.draw = function() {
 	
 	dots.updateRenderingTemporaryVariables();
@@ -466,7 +499,7 @@ dots.draw = function() {
 	//dots.drawDots();
 	dots.drawTools();
 	
-}
+};
 
 
 dots.drawField = function() {
@@ -479,7 +512,7 @@ dots.drawField = function() {
 	context.fillStyle = fieldColor;
 	context.fillRect(0, 0, width, height);
 	
-}
+};
 
 
 dots.drawLine = function (orientation, where, from, to, text) {
@@ -516,7 +549,7 @@ dots.drawLine = function (orientation, where, from, to, text) {
 		
 	}
 	
-}
+};
 
 
 dots.drawGrid = function() {
@@ -532,7 +565,7 @@ dots.drawGrid = function() {
 		dots.drawLine("vertical", i * tempVars.tileWidth + camera.displacementX, 0, vars.height, i + camera.fromX);
 	}
 	
-}
+};
 
 
 dots.drawTools = function() {
@@ -581,10 +614,55 @@ dots.drawTools = function() {
 		
 	}
 	
-}
+};
 
 
+dots.drawDot = function(x, y, radius, color) {
+	
+	
+	
+};
 
+
+dots.drawConnectionLine = function(startX, startY, endX, endY, color) {
+	
+	
+	
+};
+
+
+dots.drawDots = function() {
+	
+	var dotsarray = dots.data.dotsarray;
+	var vars = dots.variables;
+	var radius = vars.dotRadius;
+	
+	for (var i = 0; i < dotsarray.length; i++) {
+		var dot = dotsarray[i];
+		if (dots.dotIsVisible(dot)) {
+			dots.drawDot(dot.x, dot.y, radius, dot.color);
+		}
+	}
+	
+};
+
+
+dots.drawLines = function() {
+	
+	var dotsarray = dots.data.dotsarray;
+	var linesarray = dots.data.linesarray;
+	var vars = dots.variables;
+	
+	for (var i = 0; i < linesarray.length; i++) {
+		var line = linesarray[i];
+		var startDot = dots.getDotById(line.startDot);
+		var endDot = dots.getDotById(line.endDot);
+		if (dots.lineIsVisible(line)) {
+			dots.drawLine(startDot.x, startDot.y, endDot.x, endDot.y, line.color);
+		}
+	}
+	
+};
 
 
 
