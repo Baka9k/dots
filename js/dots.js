@@ -512,7 +512,17 @@ dots.dotIsVisible = function(dot) {
 
 
 dots.getDotById = function(id) {
-
+	
+	var dotsarray = dots.data.dotsarray;
+	
+	for (var i = 0; i < dotsarray.length; i++) {
+		var dot = dotsarray[i];
+		if (dot.id == id) {
+			return dot;
+		}
+	}
+	return false;
+	
 };
 
 
