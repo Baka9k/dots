@@ -22,7 +22,7 @@ dots.variables = {
 		buttonBackground: "#000000",
 	},
 	
-	dotRadius: 10,
+	dotRadius: 14,
 	lineWidth: 0.1,
 	connectionLineWidth: 3,
 	font: '10px Arial',
@@ -75,6 +75,8 @@ dots.renderingTemporaryVariables = {
 	lastVisibleTileX: 0,
 	firstVisibleTileY: 0,
 	lastVisibleTileY: 0,
+	absoluteDisplacementX: 0,
+	absoluteDisplacementY: 0,
 };
 
 dots.buttons = {
@@ -442,22 +444,30 @@ dots.updateRenderingTemporaryVariables = function() {
 	var vars = dots.variables;
 	var tempVars = dots.renderingTemporaryVariables;
 	var camera = dots.camera;
+	var fromXYUpdated = false;
 	
-	if (camera.displacementX > tempVars.tileWidth) {
-		camera.displacementX -= tempVars.tileWidth;
-		camera.fromX --;
-	}
-	if (camera.displacementY > tempVars.tileHeight) {
-		camera.displacementY -= tempVars.tileHeight;
-		camera.fromY --;
-	}
-	if (camera.displacementX < -tempVars.tileWidth) {
-		camera.displacementX += tempVars.tileWidth;
-		camera.fromX ++;
-	}
-	if (camera.displacementY < -tempVars.tileHeight) {
-		camera.displacementY += tempVars.tileHeight;
-		camera.fromY ++;
+	while (!fromXYUpdated) {
+		if (camera.displacementX > tempVars.tileWidth) {
+			camera.displacementX -= tempVars.tileWidth;
+			camera.fromX --;
+			continue;
+		}
+		if (camera.displacementY > tempVars.tileHeight) {
+			camera.displacementY -= tempVars.tileHeight;
+			camera.fromY --;
+			continue;
+		}
+		if (camera.displacementX < -tempVars.tileWidth) {
+			camera.displacementX += tempVars.tileWidth;
+			camera.fromX ++;
+			continue;
+		}
+		if (camera.displacementY < -tempVars.tileHeight) {
+			camera.displacementY += tempVars.tileHeight;
+			camera.fromY ++;
+			continue;
+		}
+		fromXYUpdated = true;
 	}
 	
 	tempVars.tileWidth = vars.tileWidth * camera.scale;
