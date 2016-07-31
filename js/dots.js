@@ -495,8 +495,8 @@ dots.draw = function() {
 	
 	dots.drawField();
 	dots.drawGrid();
-	//dots.drawLines();
-	//dots.drawDots();
+	dots.drawLines();
+	dots.drawDots();
 	dots.drawTools();
 	
 };
@@ -619,14 +619,29 @@ dots.drawTools = function() {
 
 dots.drawDot = function(x, y, radius, color) {
 	
+	var context = dots.variables.context;
 	
+	context.beginPath();
+	context.arc(x, y, radius, 0, 2 * Math.PI, false);
+	context.closePath();
+	context.fillStyle = color;
+	context.fill();
 	
 };
 
 
 dots.drawConnectionLine = function(startX, startY, endX, endY, color) {
 	
+	var vars = dots.variables;
+	var context = vars.context;
 	
+	context.lineWidth = vars.connectionLineWidth;
+	context.beginPath();
+	context.moveTo(startX, startY);
+	context.lineTo(endX, endY);
+	context.closePath();
+	context.strokeStyle = color;
+	context.stroke();
 	
 };
 
