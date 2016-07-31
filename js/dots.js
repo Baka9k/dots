@@ -491,7 +491,23 @@ dots.lineIsVisible = function(line) {
 
 
 dots.dotIsVisible = function(dot) {
-
+	
+	var vars = dots.variables;
+	var tvars = dots.renderingTemporaryVariables;
+	var dotRightmostPoint = dot.x + vars.dotRadius;
+	var dotLeftmostPoint = dot.x - vars.dotRadius;
+	var dotHighestPoint = dot.y + vars.dotRadius;
+	var dotLowestPoint = dot.y - vars.dotRadius;
+	
+	if ( (dotRightmostPoint < tvars.absoluteDisplacementX) || (dotLeftmostPoint > tvars.absoluteDisplacementX + vars.width) ) {
+		return false;
+	}
+	if ( (dotLowestPoint < tvars.absoluteDisplacementY) || (dotHighestPoint > tvars.absoluteDisplacementY + vars.height) ) {
+		return false;
+	}
+	
+	return true;
+	
 };
 
 
