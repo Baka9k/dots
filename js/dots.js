@@ -211,6 +211,8 @@ dots.handleMouseEvent = {
 	variables: {
 		movingStartX: 0,
 		movingStartY: 0,
+		currentX: 0,
+		currentY: 0,
 		lineStartX: 0,
 		lineStartY: 0,
 		lineEndX: 0,
@@ -229,6 +231,11 @@ dots.handleMouseEvent = {
 		var vars = dots.variables;
 		var lvars = dots.handleMouseEvent.variables;
 		var dotsarray = dots.data.dotsarray;
+		
+		lvars.movingStartX = pointerX;
+		lvars.movingStartY = pointerY;
+		lvars.currentX = pointerX;
+	    lvars.currentY = pointerY;
 		
 		if (vars.connectionModeEnabled) {
 			//start line
@@ -270,8 +277,8 @@ dots.handleMouseEvent = {
 		
 		var pointerX = e.pageX;
 		var pointerY = e.pageY;
-		var displacementX = pointerX - lvars.movingStartX;
-		var displacementY = pointerY - lvars.movingStartY;
+		var displacementX = pointerX - lvars.currentX;
+		var displacementY = pointerY - lvars.currentY;
 			
 		if (vars.isMoving) {
 			
@@ -313,8 +320,8 @@ dots.handleMouseEvent = {
 			
 	    }
 	    
-	    lvars.movingStartX = pointerX;
-	    lvars.movingStartY = pointerY;
+	    lvars.currentX = pointerX;
+	    lvars.currentY = pointerY;
 	    
     },
     
