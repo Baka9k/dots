@@ -485,7 +485,8 @@ dots.updateRenderingTemporaryVariables = function() {
 
 
 dots.lineIsVisible = function(line) {
-
+	if ( dots.dotIsVisible(line.startDot) || dots.dotIsVisible(line.endDot) ) return true;
+	return false;
 };
 
 
