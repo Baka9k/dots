@@ -330,6 +330,7 @@ dots.handleMouseEvent = {
 		
 		var vars = dots.variables;
 		var lvars = dots.handleMouseEvent.variables;
+		var tvars = dots.renderingTemporaryVariables;
 		
 		var pointerX = e.pageX;
 		var pointerY = e.pageY;
@@ -342,7 +343,9 @@ dots.handleMouseEvent = {
             
             //If it was click - add new dot
 		    if ((displacementX == 0) && (displacementY == 0)) {
-		        dots.addDot(pointerX, pointerY);	
+		    	var x = pointerX + tvars.absoluteDisplacementX;
+		    	var y = pointerY + tvars.absoluteDisplacementY;
+		        dots.addDot(x, y);	
 		    }
 		    
 		}
@@ -533,6 +536,7 @@ dots.getDotById = function(id) {
 };
 
 
+//Drawing
 
 dots.draw = function() {
 	
