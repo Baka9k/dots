@@ -396,36 +396,52 @@ dots.handleMouseEvent = {
 
 
 dots.checkIfPointerOnButton = function (x, y) {
+
 	var buttons = dots.buttons;
+	
 	for (var btn in buttons) {
+	
 		var button = buttons[btn];
 		var buttonStartX = dots.variables.width - button.offsetRight;
 		var buttonEndX = buttonStartX + button.width;
 		var buttonStartY = dots.variables.height - button.offsetBottom;
 		var buttonEndY = buttonStartY + button.height;
+		
 		if ( (x > buttonStartX) && (y > buttonStartY) && (x < buttonEndX) && (y < buttonEndY) ) {
 			return button.name;
 		}
+		
 	}
+	
 	return false;
+	
 };
 
 
 dots.checkIfPointerOnDot = function (x, y) {
+	
+	var vars = dots.variables;
+	var tvars = dots.renderingTemporaryVariables;
 	var dotsarray = dots.data.dotsarray;
+	
 	for (var i = 0; i < dotsarray.length; i++) {
-		var dot = dotsarray.i;
-		/*
-		var buttonStartX = dots.variables.width - button.offsetRight;
-		var buttonEndX = buttonStartX + button.width;
-		var buttonStartY = dots.variables.height - button.offsetBottom;
-		var buttonEndY = buttonStartY + button.height;
-		if ( (x > buttonStartX) && (y > buttonStartY) && (x < buttonEndX) && (y < buttonEndY) ) {
-			return button.name;
+	
+		var dot = dotsarray[i];
+		var dotRightmostPoint = dot.x - tvars.absoluteDisplacementX + vars.dotRadius;
+		var dotLeftmostPoint = dot.x - tvars.absoluteDisplacementX - vars.dotRadius;
+		var dotHighestPoint = dot.y - tvars.absoluteDisplacementY - vars.dotRadius;
+		var dotLowestPoint = dot.y - tvars.absoluteDisplacementY + vars.dotRadius;
+		console.log(dotLeftmostPoint, dotRightmostPoint, dotHighestPoint, dotLowestPoint);
+		console.log(x,y);
+		
+		if ( (x > dotLeftmostPoint) && (y > dotHighestPoint) && (x < dotRightmostPoint) && (y < dotLowestPoint) ) {
+			return dot;
 		}
-		*/
+		
 	}
+	
 	return false;
+	
 };
 
 
