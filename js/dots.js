@@ -413,6 +413,26 @@ dots.handleMouseEvent = {
 };
 
 
+dots.handleButtonClick = function(button) {
+	
+	var vars = dots.variables;
+	var buttons = dots.buttons;
+	
+	switch(button.name) {
+		case "connectionMode":
+			dots.variables.connectionModeEnabled = !dots.variables.connectionModeEnabled;
+			buttons.connectionMode.enabled = !buttons.connectionMode.enabled;
+			break;
+		default:
+			console.log("dots.handleButtonClick() received unknown type of button!");
+			return;
+	}
+	
+	dots.draw();
+	
+};
+
+
 dots.checkIfPointerOnButton = function (x, y) {
 
 	var buttons = dots.buttons;
@@ -426,7 +446,7 @@ dots.checkIfPointerOnButton = function (x, y) {
 		var buttonEndY = buttonStartY + button.height;
 		
 		if ( (x > buttonStartX) && (y > buttonStartY) && (x < buttonEndX) && (y < buttonEndY) ) {
-			return button.name;
+			return button;
 		}
 		
 	}
@@ -449,8 +469,6 @@ dots.checkIfPointerOnDot = function (x, y) {
 		var dotLeftmostPoint = dot.x - tvars.absoluteDisplacementX - vars.dotRadius;
 		var dotHighestPoint = dot.y - tvars.absoluteDisplacementY - vars.dotRadius;
 		var dotLowestPoint = dot.y - tvars.absoluteDisplacementY + vars.dotRadius;
-		console.log(dotLeftmostPoint, dotRightmostPoint, dotHighestPoint, dotLowestPoint);
-		console.log(x,y);
 		
 		if ( (x > dotLeftmostPoint) && (y > dotHighestPoint) && (x < dotRightmostPoint) && (y < dotLowestPoint) ) {
 			return dot;
@@ -688,7 +706,7 @@ dots.drawTools = function() {
 		context.shadowBlur = 0;
 		
 		//button text
-		if (vars.connectionModeEnabled) {
+		if (button.enabled) {
 			context.fillStyle = vars.colors.buttonText;
 		} else {
 			context.fillStyle = vars.colors.buttonBackground;
