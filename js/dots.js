@@ -89,6 +89,7 @@ dots.buttons = {
 		text: "C",
 		textOffsetX: 8,
 		textOffsetY: 30,
+		enabled: false,
 	},
 };
 
