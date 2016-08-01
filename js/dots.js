@@ -221,6 +221,7 @@ dots.handleMouseEvent = {
 		startDot: "",
 		endDot: "",
 		movingDot: "",
+		buttonClicked: false,
 	},
 	
 	
@@ -230,8 +231,17 @@ dots.handleMouseEvent = {
 		var pointerY = e.pageY;
 		
 		var vars = dots.variables;
+		var tvars = dots.renderingTemporaryVariables;
 		var lvars = dots.handleMouseEvent.variables;
 		var dotsarray = dots.data.dotsarray;
+		
+		//if button clicked
+		var button = dots.checkIfPointerOnButton(pointerX, pointerY);
+		if (button) {
+			dots.handleButtonClick(button);
+			lvars.buttonClicked = true;
+			return;	
+		}
 		
 		lvars.movingStartX = pointerX;
 		lvars.movingStartY = pointerY;
@@ -245,8 +255,8 @@ dots.handleMouseEvent = {
 			
 			var dot = dots.checkIfPointerOnDot(pointerX, pointerY);
 			if (dot) {
-				lvars.lineStartX = dot.x;
-				lvars.lineStartX = dot.y;
+				lvars.lineStartX = dot.x + tvars.absoluteDisplacementX;
+				lvars.lineStartX = dot.y + tvars.absoluteDisplacementY;
 				vars.connectingStarted = true;
 				lvars.startDot = dot.id;
 			}
@@ -275,6 +285,8 @@ dots.handleMouseEvent = {
 		var vars = dots.variables;
 		var lvars = dots.handleMouseEvent.variables;
 		var dotsarray = dots.data.dotsarray;
+		
+		if (lvars.buttonClicked) return;
 		
 		var pointerX = e.pageX;
 		var pointerY = e.pageY;
@@ -337,6 +349,11 @@ dots.handleMouseEvent = {
 		var pointerY = e.pageY;
 		var displacementX = pointerX - lvars.movingStartX;
 		var displacementY = pointerY - lvars.movingStartY;
+		
+		if (lvars.buttonClicked) {
+			lvars.buttonClicked = false;
+			return;
+		}
 		
 		if (vars.isMoving) {
 		
