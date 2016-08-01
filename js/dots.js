@@ -351,7 +351,7 @@ dots.handleMouseEvent = {
 		}
 		
 		else if (vars.dotIsMoving) {
-			vars.dotMoving = false;
+			vars.dotIsMoving = false;
 		}
 		
 		else if (vars.connectionStarted) {
