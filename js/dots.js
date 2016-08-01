@@ -509,7 +509,7 @@ dots.dotIsVisible = function(dot) {
 	if ( (dotRightmostPoint < tvars.absoluteDisplacementX) || (dotLeftmostPoint > tvars.absoluteDisplacementX + vars.width) ) {
 		return false;
 	}
-	if ( (dotLowestPoint < tvars.absoluteDisplacementY) || (dotHighestPoint > tvars.absoluteDisplacementY + vars.height) ) {
+	if ( (dotHighestPoint < tvars.absoluteDisplacementY) || (dotLowestPoint > tvars.absoluteDisplacementY + vars.height) ) {
 		return false;
 	}
 	
