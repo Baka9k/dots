@@ -485,8 +485,8 @@ dots.updateRenderingTemporaryVariables = function() {
 	tempVars.lastVisibleTileX = tempVars.firstVisibleTileX + vars.tilesOnX;
 	tempVars.lastVisibleTileY = tempVars.firstVisibleTileY + vars.tilesOnY;
 	
-	tempVars.absoluteDisplacementX = camera.fromX * tempVars.tileWidth + camera.displacementX;
-	tempVars.absoluteDisplacementY = camera.fromY * tempVars.tileWidth + camera.displacementY;
+	tempVars.absoluteDisplacementX = camera.fromX * tempVars.tileWidth - camera.displacementX;
+	tempVars.absoluteDisplacementY = camera.fromY * tempVars.tileWidth - camera.displacementY;
 	
 };
 
