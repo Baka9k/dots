@@ -255,8 +255,8 @@ dots.handleMouseEvent = {
 			
 			var dot = dots.checkIfPointerOnDot(pointerX, pointerY);
 			if (dot) {
-				lvars.lineStartX = dot.x + tvars.absoluteDisplacementX;
-				lvars.lineStartY = dot.y + tvars.absoluteDisplacementY;
+				lvars.lineStartX = dot.x - tvars.absoluteDisplacementX;
+				lvars.lineStartY = dot.y - tvars.absoluteDisplacementY;
 				vars.connectingStarted = true;
 				lvars.startDot = dot.id;
 			}
