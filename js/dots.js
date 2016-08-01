@@ -771,13 +771,18 @@ dots.drawLines = function() {
 	var dotsarray = dots.data.dotsarray;
 	var linesarray = dots.data.linesarray;
 	var vars = dots.variables;
+	var tvars = dots.renderingTemporaryVariables;
 	
 	for (var i = 0; i < linesarray.length; i++) {
 		var line = linesarray[i];
 		var startDot = dots.getDotById(line.startDot);
 		var endDot = dots.getDotById(line.endDot);
+		var startX = startDot.x - tvars.absoluteDisplacementX;
+		var startY = startDot.y - tvars.absoluteDisplacementY;
+		var endX = endDot.x - tvars.absoluteDisplacementX;
+		var endY = endDot.y - tvars.absoluteDisplacementY;
 		if (dots.lineIsVisible(line)) {
-			dots.drawLine(startDot.x, startDot.y, endDot.x, endDot.y, line.color);
+			dots.drawConnectionLine(startX, startY, endX, endY, line.color);
 		}
 	}
 	
