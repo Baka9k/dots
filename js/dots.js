@@ -699,12 +699,15 @@ dots.drawDots = function() {
 	
 	var dotsarray = dots.data.dotsarray;
 	var vars = dots.variables;
+	var tvars = dots.renderingTemporaryVariables;
 	var radius = vars.dotRadius;
 	
 	for (var i = 0; i < dotsarray.length; i++) {
 		var dot = dotsarray[i];
 		if (dots.dotIsVisible(dot)) {
-			dots.drawDot(dot.x, dot.y, radius, dot.color);
+			var x = dot.x - tvars.absoluteDisplacementX;
+			var y = dot.y - tvars.absoluteDisplacementY;
+			dots.drawDot(x, y, radius, dot.color);
 		}
 	}
 	
