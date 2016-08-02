@@ -1,6 +1,7 @@
 # Dots
 
 Shows draggable grid, where user can place dots, move them and connect any two dots with line.
+Click on canvas to place dot, move dots with mouse, connect dots using Connection Mode (C button in bottom right corner or C on keyboard).
 
 ##Live demo:
 **[https://baka9k.github.io/dots/](https://baka9k.github.io/dots/)**
